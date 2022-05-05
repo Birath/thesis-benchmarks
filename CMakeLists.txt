@@ -21,8 +21,6 @@ target_compile_definitions(skepu_config_base INTERFACE SKEPU_DEBUG=3 USE_INTEL_F
 target_compile_options(skepu_config_base INTERFACE ${AoclCompileConfig} ${AoclLinkConfig})
 target_include_directories(skepu_config_base INTERFACE "")
 
-skepu_add_executable(reduce_benchmark FPGA OpenMP SKEPUSRC reduce_benchmark.cpp)
 
-target_link_libraries(reduce_benchmark PRIVATE skepu_config_base)
-
+add_subdirectory(reduce_benchmark)
 add_subdirectory(map_benchmark)

@@ -2,6 +2,7 @@
 #include <skepu>
 #include <fstream>
 #include <string>
+#include <sys/stat.h>
 
 
 auto get_next_result_file(std::string const& prefix) -> std::string {
@@ -19,7 +20,10 @@ auto get_next_result_file(std::string const& prefix) -> std::string {
 
 template<typename BF>
 void run_benchmark(BF func, size_t repeats, size_t start_size, size_t end_size, size_t increment, std::string name) {
-    auto const output_name{get_next_result_file(name)};
+    mkdir("results", S_IRWXU);
+    std::string const output_folder{"results/" + name};
+    mkdir(output_folder.c_str(), S_IRWXU);
+    auto const output_name{output_folder + "/" + get_next_result_file(name)};
     std::cout << "Running benchmark " << name << "\n" << " From " << start_size << " To " << end_size << "\n In increments of " << increment << " and " << repeats << " repeats\n" << "Writing result to " << output_name << "\n";
     std::ofstream result{output_name};
 

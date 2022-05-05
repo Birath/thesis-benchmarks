@@ -1,0 +1,3 @@
+skepu_add_executable(reduce_benchmark FPGA OpenMP SKEPUSRC reduce_benchmark.cpp)
+
+target_link_libraries(reduce_benchmark PRIVATE skepu_config_base)
