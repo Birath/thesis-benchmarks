@@ -1,0 +1,3 @@
+skepu_add_executable(map_benchmark FPGA OpenMP SKEPUSRC map_benchmark.cpp)
+
+target_link_libraries(map_benchmark PRIVATE skepu_config_base)
