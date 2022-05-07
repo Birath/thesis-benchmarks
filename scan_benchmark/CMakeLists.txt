@@ -1,0 +1,3 @@
+skepu_add_executable(scan_benchmark FPGA OpenMP SKEPUSRC scan_benchmark.cpp)
+
+target_link_libraries(scan_benchmark PRIVATE skepu_config_base)

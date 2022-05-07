@@ -24,3 +24,5 @@ target_include_directories(skepu_config_base INTERFACE "")
 
 add_subdirectory(reduce_benchmark)
 add_subdirectory(map_benchmark)
+add_subdirectory(mapreduce_benchmark)
+add_subdirectory(scan_benchmark)

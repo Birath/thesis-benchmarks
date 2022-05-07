@@ -7,13 +7,13 @@
 
 auto get_next_result_file(std::string const& prefix) -> std::string {
     auto next_name{prefix + ".dat"};
-    std::ifstream f{next_name};
+    std::ifstream f{"results/" + prefix + "/" + next_name};
     size_t index = 1;
     while (f) {
         std::stringstream ss {};
         ss << prefix << index++ << ".dat";
         next_name = ss.str();
-        f = std::ifstream{next_name};
+        f = std::ifstream{"results/" + prefix + "/" + next_name};
     }
     return next_name;
 }

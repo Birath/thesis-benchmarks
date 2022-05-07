@@ -15,7 +15,7 @@ T add(T a, T b)
 }
 
 template<typename T>
-auto run_map(skepu::BackendSpec spec, size_t min, size_t max, size_t repeats, size_t increment) -> void {
+auto run_scan(skepu::BackendSpec spec, size_t min, size_t max, size_t repeats, size_t increment) -> void {
 	auto reduce = skepu::Reduce(add<T>);
 	reduce.setBackend(spec);
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     std::tie(min, max, repeats) = skepu::benchmark::parseArgs(argc, argv, 100000, 4000000, 10);
     size_t increment = argc > 4 ? atoi(argv[4]) : 100000;
 	auto spec = argc > 5 ? skepu::BackendSpec{argv[5]} : skepu::BackendSpec{skepu::Backend::Type::FPGA};
-    run_map<float>(spec, min, max, repeats, increment);
+    run_scan<float>(spec, min, max, repeats, increment);
     
 	
 	return 0;

@@ -9,20 +9,25 @@
 #include "run_benchmark.hpp"
  
 template<typename T>
-T map_func(T a, T b)
+T add(T a, T b)
 {
-	return a * a + b * b;
+	return a + b;
+}
+
+template<typename T>
+T multiply(T a, T b)
+{
+	return a + b;
 }
 
 template<typename T>
 auto run_scan(skepu::BackendSpec spec, size_t min, size_t max, size_t repeats, size_t increment) -> void {
-	auto map = skepu::Map(map_func<T>);
-	map.setBackend(spec);
+	auto map_reduce = skepu::MapReduce(multiply<T>, add<T>);
+	map_reduce.setBackend(spec);
 
     auto func = [&](size_t current_size) {
         skepu::Vector<T> a(current_size);
         skepu::Vector<T> b(current_size);
-        skepu::Vector<T> result(current_size);
         T counter = 0;
         std::transform(a.begin(), a.end(), a.begin(), [&counter](T in) {
             return T{counter++};
@@ -30,10 +35,10 @@ auto run_scan(skepu::BackendSpec spec, size_t min, size_t max, size_t repeats, s
         std::transform(b.begin(), b.end(), b.begin(), [&counter](T in) {
             return T{counter++};
         });
-        map(result, a, b);
-        result.flush();
+        T res = map_reduce(a, b);
+        skepu::io::cout << res << "\n";
     };
-    run_benchmark(func, repeats, min, max, increment, "map");
+    run_benchmark(func, repeats, min, max, increment, "map_reduce");
 }
 
 
