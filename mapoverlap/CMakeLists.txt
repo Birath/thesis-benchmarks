@@ -1,0 +1,3 @@
+skepu_add_executable(mapoverlap FPGA OpenMP SKEPUSRC mapoverlap.cpp)
+
+target_link_libraries(mapoverlap PRIVATE skepu_config_base)
